@@ -622,7 +622,7 @@ class WurzelBot:
             Logger().print('Zu wenig WT')
             return
 
-        if User().get_level() > 23 and User().get_bar() > MINwt:
+        if User().get_level() > 21 and User().get_bar() > MINwt:
             questnr = self.__HTTPConn.initInfinityQuest()['questnr']
             if int(questnr) <= 500:
                 for item in self.__HTTPConn.initInfinityQuest()['questData']['products']:
