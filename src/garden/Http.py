@@ -3,6 +3,8 @@
 
 from src.core.HTTPCommunication import HTTPConnection
 from src.logger.Logger import Logger
+from src.product.Product import CATEGORY_ADORNMENTS
+from src.product.ProductData import ProductData
 from src.product.Products import WEEDS, TREE_STUMP, STONE, MOLE
 import json, re, time
 
@@ -226,6 +228,12 @@ class Http:
         also 24 Stunden + 30 Sekunden (Sicherheit) zurück, wurde das Feld zwar bereits gegossen,
         kann jedoch wieder gegossen werden.
         """
+		#check if field is an adorment, adorments cannot be watered
+        productId = jContent["garden"][str(fieldID)][0]
+        product = ProductData().get_product_by_id(productId)
+        if CATEGORY_ADORNMENTS == product.get_category():
+            return True
+	
         oneDayInSeconds = (24*60*60) + 30
         currentTimeInSeconds = time.time()
         waterDateInSeconds = int(jContent['water'][fieldID-1][1])
